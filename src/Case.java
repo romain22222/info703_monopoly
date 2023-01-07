@@ -23,15 +23,12 @@ public abstract class Case {
         this.suivant = value;
     }
 
-    public void actionCase(final Player player) {
-    }
+    abstract public void actionCase(final Player player);
 
-    public void actionOnPass(final Player player) {
-    }
+    abstract public void actionOnPass(final Player player);
 
     public Case obtenirSuivant() {
-        // TODO Auto-generated return
-        return null;
+        return this.suivant;
     }
 
     public Case(String nom, Case suivant) {

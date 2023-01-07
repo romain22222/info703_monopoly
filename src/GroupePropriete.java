@@ -13,7 +13,7 @@ public class GroupePropriete {
         this.nomGroupe = value;
     }
 
-    private List<CaseAchetable> proprietes = new ArrayList<CaseAchetable> ();
+    private List<CaseAchetable> proprietes = new ArrayList<> ();
 
     public List<CaseAchetable> getProprietes() {
         // Automatically generated method. Please do not modify this code.
@@ -26,8 +26,25 @@ public class GroupePropriete {
     }
 
     public boolean toutPossedePareil() {
-        // TODO Auto-generated return
-        return false;
+        Player playerProp1 = this.proprietes.get(0).proprietaire;
+        if (playerProp1 == null) return false;
+        for (CaseAchetable prop: this.proprietes) {
+            if (prop.proprietaire != playerProp1) return false;
+        }
+        for (CaseAchetable prop: this.proprietes) {
+            if (prop instanceof CasePropriete) {
+                ((CasePropriete) prop).setEtat(new CaseProprieteEtatConstructible((CasePropriete) prop));
+            }
+        }
+        return true;
+    }
+
+    public int nbPossedePar(Player p) {
+        int nb = 0;
+        for (CaseAchetable prop: this.proprietes) {
+            if (prop.proprietaire == p) nb++;
+        }
+        return nb;
     }
 
     public GroupePropriete(String nomGroupe) {

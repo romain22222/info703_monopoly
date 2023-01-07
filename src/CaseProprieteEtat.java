@@ -1,12 +1,24 @@
-public interface CaseProprieteEtat {
-    CasePropriete getPropriete();
+public abstract class CaseProprieteEtat {
+    CasePropriete propriete = null;
 
-    void setPropriete(final CasePropriete value);
+    CaseProprieteEtat() {}
 
-    void acheterMaison(final Player p);
+    CaseProprieteEtat(CasePropriete prop) {
+        this.propriete = prop;
+    }
 
-    boolean acheter(final Player p);
+    CasePropriete getPropriete() {
+        return this.propriete;
+    };
 
-    void payerLoyer(final Player p1);
+    void setPropriete(final CasePropriete value) {
+        this.propriete = value;
+    };
+
+    abstract void acheterMaison(final Player p);
+
+    abstract boolean acheter(final Player p);
+
+    abstract void payerLoyer(final Player p1);
 
 }

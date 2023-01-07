@@ -16,4 +16,15 @@ public class CaseTaxe extends Case {
         this.montant = value;
     }
 
+    @Override
+    public void actionCase(Player player) {
+        if (!player.retirerArgent(montant)) {
+            player.seRetirer();
+        }
+    }
+
+    @Override
+    public void actionOnPass(Player player) {
+
+    }
 }

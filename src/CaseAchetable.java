@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public abstract class CaseAchetable extends Case {
     private int achat;
 
@@ -29,6 +31,10 @@ public abstract class CaseAchetable extends Case {
         this.loyers = value;
     }
 
+    public int getLoyer(int niveau) {
+        return this.loyers[niveau];
+    }
+
     public Player proprietaire;
 
     public GroupePropriete groupe;
@@ -38,15 +44,39 @@ public abstract class CaseAchetable extends Case {
         groupe.addInGroupe(this);
     }
 
-    public void acheter(final Player player) {
+    public boolean acheter(final Player player) {
+        if(player.retirerArgent(achat)){
+            this.proprietaire=player;
+            this.groupe.toutPossedePareil();
+            return true;
+        }
+        return false;
     }
 
     public void updateProprietaire(final Player p) {
+        this.proprietaire = p;
+    }
+
+    abstract public void payerLoyer(final Player p1);
+
+    @Override
+    public void actionCase(Player player) {
+        if (proprietaire == null) {
+            // TODO FAIRE DEMANDE
+            player.acheteCase();
+            System.out.println("Joueur " + player.getNom() + " achète " + this.getNom());
+        } else if (checkProprietaireDifferent(player)) {
+            this.payerLoyer(player);
+        }
+    }
+
+    @Override
+    public void actionOnPass(Player player) {
+
     }
 
     public boolean checkProprietaireDifferent(final Player p1) {
-        // TODO Auto-generated return
-        return false;
+        return !Objects.equals(p1.getNom(), this.proprietaire.getNom());
     }
 
 }

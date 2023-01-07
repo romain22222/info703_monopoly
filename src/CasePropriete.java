@@ -26,23 +26,35 @@ public class CasePropriete extends CaseAchetable {
     public CaseProprieteEtat etat;
 
     public void updateNiveau(final int niveau) {
+        this.niveau = niveau;
     }
 
     public int ajouterNiveau() {
-        // TODO Auto-generated return
-        return 0;
+        this.niveau+=1;
+        return niveau;
+    }
+
+    @Override
+    public boolean acheter(Player player) {
+        return this.etat.acheter(player);
     }
 
     public void acheterMaison(final Player p) {
+        this.etat.acheterMaison(p);
     }
 
     public void payerLoyer(final Player p1) {
+        this.etat.payerLoyer(p1);
+    }
+
+    public void setEtat(CaseProprieteEtat etat) {
+        this.etat = etat;
     }
 
     public CasePropriete(String nom, int constructionMaison, int[] loyers, Case suivant) {
         super(nom, constructionMaison, loyers, suivant);
         this.niveau = -1;
         this.constructionMaison = constructionMaison;
-        this.etat = new CaseProprieteEtatLibre();
+        this.etat = new CaseProprieteEtatLibre(this);
     }
 }

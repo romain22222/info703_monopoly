@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Plateau {
@@ -99,7 +100,7 @@ public class Plateau {
         GroupePropriete bleuFonce = new GroupePropriete("Bleu Foncé");
         GroupePropriete gares = new GroupePropriete("Gares");
         GroupePropriete energies = new GroupePropriete("Energies");
-        groupeProprietes.addAll(List.of(new GroupePropriete[]{marron, bleuClair, rose, orange, rouge, jaune, vert, bleuFonce, gares, energies}));
+        Collections.addAll(groupeProprietes, marron, bleuClair, rose, orange, rouge, jaune, vert, bleuFonce, gares, energies);
         marron1.setGroupe(marron);
         marron2.setGroupe(marron);
 
@@ -176,5 +177,11 @@ public class Plateau {
         cases.add(bleuFonce1);
         cases.add(taxe2);
         cases.add(bleuFonce2);
+
+        Player paul = new Player("Paul", depart, null);
+        Player luc = new Player("Luc", depart, paul);
+        Player theo = new Player("Theo", depart, luc);
+        paul.setPlayerSuivant(theo);
+        Collections.addAll(player, theo, luc, paul);
     }
 }
