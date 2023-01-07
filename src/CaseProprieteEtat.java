@@ -21,4 +21,7 @@ public abstract class CaseProprieteEtat {
 
     abstract void payerLoyer(final Player p1);
 
+    public boolean isConstructible() {
+        return false;
+    };
 }

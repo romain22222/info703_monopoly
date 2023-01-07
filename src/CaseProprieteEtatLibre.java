@@ -9,7 +9,7 @@ public class CaseProprieteEtatLibre extends CaseProprieteEtat {
 
     public boolean acheter(final Player p) {
         if(p.retirerArgent(getPropriete().getConstructionMaison())){
-            this.propriete.proprietaire=p;
+            this.propriete.updateProprietaire(p);
             this.propriete.ajouterNiveau();
             if (!this.propriete.groupe.toutPossedePareil()) {
                 this.propriete.setEtat(new CaseProprieteEtatAchetee(this.propriete));

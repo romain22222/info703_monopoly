@@ -55,6 +55,7 @@ public abstract class CaseAchetable extends Case {
 
     public void updateProprietaire(final Player p) {
         this.proprietaire = p;
+        p.getAchetables().add(this);
     }
 
     abstract public void payerLoyer(final Player p1);
@@ -62,9 +63,13 @@ public abstract class CaseAchetable extends Case {
     @Override
     public void actionCase(Player player) {
         if (proprietaire == null) {
-            // TODO FAIRE DEMANDE
-            player.acheteCase();
-            System.out.println("Joueur " + player.getNom() + " achète " + this.getNom());
+            if (Lecteur.closedQuestion("Cette case n'a aucun propriétaire, voulez vous l'acheter ?")) {
+                if(player.acheteCase()) {
+                    System.out.println("Joueur " + player.getNom() + " achète " + this.getNom());
+                }
+            } else {
+                System.out.println("Joueur " + player.getNom() + " n'achète pas " + this.getNom());
+            }
         } else if (checkProprietaireDifferent(player)) {
             this.payerLoyer(player);
         }

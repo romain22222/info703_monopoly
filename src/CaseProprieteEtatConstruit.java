@@ -4,13 +4,20 @@ public class CaseProprieteEtatConstruit extends CaseProprieteEtat {
     }
     public void acheterMaison(final Player p) {
         if(p.retirerArgent(getPropriete().getConstructionMaison())){
-            this.propriete.ajouterNiveau();
-            this.propriete.proprietaire=p;
-            if(this.propriete.ajouterNiveau()==5){
+            int newNiveau = this.propriete.ajouterNiveau();
+            if(newNiveau==5){
                 this.propriete.setEtat(new CaseProprieteEtatHotelle(this.propriete));
+                System.out.println(getPropriete().getNom() + " possède maintenant un hôtel");
+            } else {
+                System.out.println(getPropriete().getNom() + " possède maintenant " + this.propriete.getNiveau() + " maisons");
             }
 
         }
+    }
+
+    @Override
+    public boolean isConstructible() {
+        return propriete.groupe.minLevelGroupe() == propriete.getNiveau();
     }
 
     public boolean acheter(final Player p) {

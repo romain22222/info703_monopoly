@@ -72,10 +72,11 @@ public class Player {
         this.playerPrecedent = value;
     }
 
-    public void acheteCase() {
+    public boolean acheteCase() {
         if (this.currentCase instanceof CaseAchetable) {
-            ((CaseAchetable) this.currentCase).acheter(this);
+            return ((CaseAchetable) this.currentCase).acheter(this);
         }
+        return false;
     }
 
     public boolean aAuMoins(final int montant) {
@@ -97,7 +98,8 @@ public class Player {
 
     }
 
-    public void ameliorerPropriete(final String proprieteName) {
+    public void ameliorerPropriete(final CasePropriete propriete) {
+        propriete.acheterMaison(this);
     }
 
     public void seRetirer() {
@@ -106,6 +108,8 @@ public class Player {
 
     public Player faireTour() {
         System.out.println("Tour de " + getNom() + " : positionné sur " + this.currentCase.getNom());
+        System.out.println("Jouer (appuyer sur entrée) ");
+        Lecteur.next();
         int deplacement = Des.lancerDes();
         System.out.println("Fait " + deplacement + " aux dés");
         for (int i = 0; i < deplacement; i++) {
@@ -114,13 +118,43 @@ public class Player {
         }
         System.out.println("Arrive sur " + this.currentCase.getNom());
         this.currentCase.actionCase(this);
-        // TODO DONNER POSSIBILITE DE CHOISIR SI CONSTRUCTION MAISON
+        if (haveCasePropriete()) {
+            while (true) {
+                List<CasePropriete> cpa = getLotissementAmeliorables();
+                if (cpa.size() == 0 || !Lecteur.closedQuestion("Voulez-vous améliorer un de vos lotissements ?")) {
+                    break;
+                }
+                List<String> names = new ArrayList<>();
+                for (CasePropriete c :
+                        cpa) {
+                    names.add(c.getNom());
+                }
+                ameliorerPropriete(cpa.get(Lecteur.choiceQuestion("Quel case améliorer ?", names)));
+            }
+        }
         return this.playerSuivant;
+    }
+
+    private boolean haveCasePropriete() {
+        for (CaseAchetable ca :
+                achetables) {
+            if (ca instanceof CasePropriete) return true;
+        }
+        return false;
+    }
+
+    private List<CasePropriete> getLotissementAmeliorables() {
+        List<CasePropriete> cpa = new ArrayList<>();
+        for (CaseAchetable ca :
+                achetables) {
+            if (ca instanceof CasePropriete && ((CasePropriete) ca).isConstructible()) cpa.add((CasePropriete) ca);
+        }
+        return cpa;
     }
 
     public Player(String nom, Case currentCase, Player playerSuivant) {
         this.nom = nom;
-        this.argent = 1000;
+        this.argent = 10000;
         this.currentCase = currentCase;
         if (playerSuivant != null) this.setPlayerSuivant(playerSuivant);
     }

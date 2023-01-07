@@ -47,6 +47,10 @@ public class CasePropriete extends CaseAchetable {
         this.etat.payerLoyer(p1);
     }
 
+    public boolean isConstructible() {
+        return this.etat.isConstructible();
+    }
+
     public void setEtat(CaseProprieteEtat etat) {
         this.etat = etat;
     }

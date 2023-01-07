@@ -5,12 +5,18 @@ public class CaseProprieteEtatConstructible extends CaseProprieteEtat {
     public void acheterMaison(final Player p) {
         if(p.retirerArgent(getPropriete().getConstructionMaison())){
             this.propriete.ajouterNiveau();
-            this.propriete.proprietaire=p;
             this.propriete.setEtat(new CaseProprieteEtatConstruit(this.propriete));
+            System.out.println(getPropriete().getNom() + " possède maintenant 1 maison");
+        } else {
+            System.out.println(getPropriete().proprietaire.getNom() + " n'a pas assez d'argent pour acheter une maison");
         }
 
     }
 
+    @Override
+    public boolean isConstructible() {
+        return true;
+    }
 
     public boolean acheter(final Player p) {
         System.out.println("Cette case a déjà un propriétaire");
