@@ -154,7 +154,7 @@ public class Player {
 
     public Player(String nom, Case currentCase, Player playerSuivant) {
         this.nom = nom;
-        this.argent = 10000;
+        this.argent = 2000;
         this.currentCase = currentCase;
         if (playerSuivant != null) this.setPlayerSuivant(playerSuivant);
     }
